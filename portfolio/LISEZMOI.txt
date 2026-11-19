@@ -1,0 +1,13 @@
+PORTFOLIO AFRICA BUILDERS (site statique, aucun serveur nécessaire)
+
+1. Vos coordonnées : ouvrez script.js, remplissez l'objet CONTACT en haut
+   (email, github, linkedin, instagram). Un champ vide masque le bouton.
+2. Aperçu en local : double-clic sur index.html.
+3. Mise en ligne gratuite (GitHub Pages) :
+   - créez un dépôt, ajoutez tout le contenu de ce dossier à la racine ;
+   - Réglages > Pages > Branch : main, dossier / (root) ;
+   - le site apparaît sur https://votre-compte.github.io/nom-du-depot/
+   Alternatives gratuites : Netlify (glisser-déposer le dossier), Cloudflare Pages, Vercel.
+4. Avant de publier : mettez l'adresse définitive dans les balises og:image si vous voulez
+   que l'aperçu des réseaux sociaux marche (remplacer assets/og.png par l'adresse complète).
+5. Modifier les textes : tout est dans index.html. Les couleurs sont en haut de style.css.

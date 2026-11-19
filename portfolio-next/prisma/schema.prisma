@@ -1,0 +1,126 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  MEMBER
+  COLLABORATOR
+}
+
+model Member {
+  id            Int            @id @default(autoincrement())
+  slug          String         @unique @db.VarChar(40)
+  name          String         @db.VarChar(120)
+  firstName     String         @db.VarChar(60)
+  initials      String         @db.VarChar(4)
+  color         String         @db.VarChar(9)
+  role          Role           @default(MEMBER)
+  title         String         @db.VarChar(200)
+  badge         String?        @db.VarChar(120)
+  bio           String         @db.Text
+  aspiration    String?        @db.Text
+  extra         String?        @db.Text
+  photo         String?        @db.VarChar(200)
+  photoPos      String         @default("50% 30%") @db.VarChar(30)
+  position      Int            @default(0)
+  contributions Contribution[]
+  facts         Fact[]
+  sources       Source[]
+  links         Link[]
+}
+
+model Contribution {
+  id       Int    @id @default(autoincrement())
+  memberId Int
+  member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  date     String @db.VarChar(60)
+  title    String @db.VarChar(160)
+  text     String @db.Text
+  position Int    @default(0)
+
+  @@index([memberId])
+}
+
+model Fact {
+  id       Int    @id @default(autoincrement())
+  memberId Int
+  member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  value    String @db.VarChar(20)
+  label    String @db.VarChar(200)
+  position Int    @default(0)
+
+  @@index([memberId])
+}
+
+model Source {
+  id       Int    @id @default(autoincrement())
+  memberId Int
+  member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  label    String @db.VarChar(80)
+  url      String @db.VarChar(500)
+
+  @@index([memberId])
+}
+
+// Réseaux d'un membre : kind = linkedin | instagram | youtube | kaggle | zindi | portfolio
+model Link {
+  id       Int    @id @default(autoincrement())
+  memberId Int
+  member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  kind     String @db.VarChar(30)
+  url      String @db.VarChar(500)
+
+  @@unique([memberId, kind])
+}
+
+model Project {
+  id         Int           @id @default(autoincrement())
+  slug       String        @unique @db.VarChar(40)
+  name       String        @db.VarChar(120)
+  tag        String        @db.VarChar(80)
+  status     String        @db.VarChar(10) // ok | wip
+  tagline    String        @db.VarChar(200)
+  lead       String        @db.VarChar(300)
+  paragraphs String        @db.Text // un paragraphe par ligne
+  linkLabel  String?       @db.VarChar(80)
+  linkUrl    String?       @db.VarChar(300)
+  chips      String?       @db.Text // une puce par ligne
+  stageTitle String        @db.VarChar(120)
+  stageNote  String        @db.VarChar(200)
+  position   Int           @default(0)
+  steps      ProjectStep[]
+}
+
+model ProjectStep {
+  id        Int     @id @default(autoincrement())
+  projectId Int
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  title     String  @db.VarChar(80)
+  text      String  @db.VarChar(300)
+  position  Int     @default(0)
+
+  @@index([projectId])
+}
+
+model Setting {
+  key   String @id @db.VarChar(60)
+  value String @db.Text
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(120)
+  email     String   @db.VarChar(200)
+  message   String   @db.Text
+  ip        String?  @db.VarChar(64)
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}

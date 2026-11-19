@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 180"><defs><clipPath id="m"><rect x="0" y="0" width="260" height="180"/></clipPath></defs><g clip-path="url(#m)">
+<path d="M22 180 L72 50 L122 180" fill="none" stroke="#0D1B2A" stroke-width="28" stroke-linejoin="miter" stroke-miterlimit="12"/>
+<rect x="52" y="126" width="40" height="28" fill="#F2A33A"/>
+<path d="M172 36 V180" stroke="#0D1B2A" stroke-width="28"/>
+<path d="M172 50 H196 a24 24 0 0 1 0 48 H172 M172 98 H202 a30 30 0 0 1 0 60 H172" fill="none" stroke="#0D1B2A" stroke-width="28" stroke-linejoin="round"/></g></svg>
